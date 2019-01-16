@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<script type="text/javascript" src="js/jquery-3.3.1.js"></script> 
+<h1>我的第一段 JavaScript</h1>
+
+<p>请输入数字。如果输入值不是数字，浏览器会弹出提示框。</p>
+
+<input id="demo" type="text">
+
+<p id="par">A Paragraph.</p>
+
+<div id="myDIV">A DIV.</div>
+
+<script>
+function myFunction()
+{
+	var x=document.getElementById("demo").value;
+	if(x==""||isNaN(x))
+		{
+		alert("Not Numeric");
+		}
+}
+
+function rep()
+{
+	var s=document.getElementById("demo").value;
+	document.getElementById("par").innerHTML = s;
+}
+
+function message()
+{
+try
+  {
+  alert("Welcome guest!");
+  document.write("Welcome guest!")
+  }
+catch(err)
+  {
+  txt="There was an error on this page.\n\n";
+  txt+="Error description: " + err.message + "\n\n";
+  txt+="Click OK to continue.\n\n";
+  alert(txt);
+  }
+}
+
+function changeImage(){
+	var x=document.getElementById("image3");
+	if(x.src.match("13")){
+		x.src = "img/3.jpg"
+	}
+	else{
+		x.src = "img/13.jpg"
+	}
+	
+}
+
+function timer(){
+	setTimeout("changeImage()", 250);
+	setTimeout(changeImage, 550);
+	//setTimeout(changeImage, 3250);
+	
+	
+	setInterval(changeImage,1000);
+	
+}
+
+function init(){
+	$("#displayipt").load("test.txt",function(responseTxt,statusTxt,xhr){
+    if(statusTxt=="success")
+      alert("外部内容加载成功!");
+    if(statusTxt=="error")
+      alert("Error: "+xhr.status+": "+xhr.statusText);
+	});
+	
+	SetCurWin($("#dbgipt").val())
+	Display(GetShape())
+	//alert(GetShape())
+	try{
+		c = document.getElementById("scene");
+		cxt = c.getContext("2d");
+		img = new Image();
+		img.id = "cur_obj";
+		img.src="img/3.jpg";
+		onpaint();
+	}
+	catch(err){
+		alert(err)
+	}
+}
+
+function click(){
+	var keynum;
+	var keychar;
+	var numcheck;
+	e = window.event
+	if(window.event) // IE
+	{
+	  keynum = e.keyCode
+	}
+	else if(e.which) // Netscape/Firefox/Opera
+	{
+	  keynum = e.which
+	}
+	keychar = String.fromCharCode(keynum)
+	//cxt.clearRect(x,y,100,100)
+	w = '+=0px'
+	h = '+=0px'
+	switch(keynum){
+		case 37:w = '-=10px';//x -= 10;
+		break;
+		case 39:w = '+=10px';//x += 10;
+		break;
+		case 38:h = '-=10px';
+		break;
+		case 40:h = '+=10px';
+		break;
+	}
+	$("canvas").animate({
+		height:h,
+		left:w
+	});
+
+	//onpaint();
+	document.getElementById("displaykey").innerHTML = keynum
+}
+
+function inputstr(){
+	try{
+		$("#displayipt").append($("#ipt").val())
+	}
+	catch(err){
+		alert(err)
+	}	
+	return false
+}
+	
+</script>
+
+
+<button type="button" onclick="myFunction()">点击这里判断数字</button>
+<button type="button" onclick="rep()">点击这里修改文本</button>
+<button type="button" onclick="message()">点击这里自杀</button>
+<button type="button" onclick="changeImage()">点击这里</button>
+<button type="button" onclick="timer()">点击这里定时器</button>
+<p></p>
+
+<img id="image3" src="img/3.jpg" onclick="changeImage()">
+
+
+</body>
+
+</html>

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<body>
+
+<style type="text/css">
+canvas.dotted {border-style: dotted}
+canvas.dashed {border-style: dashed}
+canvas.solid {border-style: solid}
+canvas.double {border-style: double}
+canvas.groove {border-style: groove}
+canvas.ridge {border-style: ridge}
+canvas.inset {border-style: inset}
+canvas.outset {border-style: outset}
+.container{
+  margin:0 auto;
+  width:600px;
+}
+#scene{
+  border:1px solid black;
+}
+</style>
+
+<h1>我的第一段 JavaScript</h1>
+<p>请输入数字。如果输入值不是数字，浏览器会弹出提示框。</p>
+
+
+
+
+<script type="text/javascript" src="js/jquery-3.3.1.js"></script> 
+
+
+<script type="text/javascript" src="js/sprit.js"></script>
+<script type="text/javascript" src="js/window.js"></script>
+<script type="text/javascript" src="js/actor.js"></script>
+<script type="text/javascript" src="js/user_interface.js"></script>
+
+
+
+<script>
+var bck1
+var win1
+var win2
+var act1
+
+function click()
+{
+	var keynum;
+	var keychar;
+	var numcheck;
+	e = window.event
+	if(window.event) // IE
+	{
+	  keynum = e.keyCode
+	}
+	else if(e.which) // Netscape/Firefox/Opera
+	{
+	  keynum = e.which
+	}
+	//keychar = String.fromCharCode(keynum)
+	//alert(keynum)
+	
+	switch(keynum){//WASD
+		case 83:act1.go_ahead(0,1);
+		break;
+		case 65:act1.go_ahead(1,1);//x -= 10;
+		break;
+		case 68:act1.go_ahead(2,1); //x += 10;
+		break;
+		case 87:act1.go_ahead(3,1);
+		break;
+	}
+	
+}
+
+function register_key()
+{
+	//walk_keys = [83,65,68,87]
+	user_interface.add_key_map(83, function(){act1.go_ahead(0,1)})
+	user_interface.add_key_map(65, function(){act1.go_ahead(1,1)})
+	user_interface.add_key_map(68, function(){act1.go_ahead(2,1)})
+	user_interface.add_key_map(87, function(){act1.go_ahead(3,1)})
+	
+}
+
+
+// init
+//
+$(function()
+{
+//console.log(winBase)
+	// document.onkeydown = user_interface.key_down
+	// document.onkeyup = user_interface.key_up
+	document.addEventListener("keyup",user_interface.key_up)
+	document.addEventListener("keydown",user_interface.key_down)
+	register_key()
+	//user_interface.keep_detect()
+	
+	try{
+	
+	bck1 = spritBase.createNew("img/back1.png")
+	bck1.show_on()
+	win1 = winBase.createNew(0, 300, 600, 120)
+	win1.sprit.show_on()
+	win2 = winBase.createNew(100, 100, 100, 100)
+	win2.sprit.show_on()
+	act1 = actorBase.createNew(122,122)
+	act1.sprit.show_on()
+	spritBase.keep_on()
+	}catch(err){alert(err)}
+	alert("over")
+	
+})
+
+//window.onload = function(){alert(1)}
+
+//function debugf(){
+//	try{
+//		alert($("#ipt").val())
+//	}
+//	catch(err){
+//		alert("err:"+err)
+//	}
+//}
+//
+//
+//
+//function checkhHtml5() 
+//{ 
+//	if (typeof(Worker) !== "undefined") 
+//	{ 
+//		alert("支持HTML5"); 
+//	} else 
+//	{ 
+//		alert("不支持HTML5"); 
+//	}
+//}
+
+function debug2()
+{
+alert(act1.x)
+alert(act1.y)
+alert(act1.face)
+
+	//try{
+	//var o = spritBase.createNew("img/back1.png")
+	//o.show_on()
+	//o.flush()
+	//}catch(err){alert(err)}
+	
+}
+		
+</script>
+
+
+
+<div id="displaykey">
+	显示键值
+</div>
+<div class="container">
+<canvas class="solid" id="scene" width="600" height="450" draggable="true"></canvas>
+</div>
+<button type="button" onclick="debug2()">点击这里debug</button>
+
+<div id="displayipt">
+	显示输入文本
+</div>
+<input id="ipt" type="text" onchange ="inputstr()"> //onchange为焦点改变时发生
+
+
+
+
+</body>
+
+</html>
